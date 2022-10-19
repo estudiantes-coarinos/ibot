@@ -47,10 +47,18 @@ client.on("messageCreate", (msg: Message) => {
     return;
   }
 
+  // Handle empty suggestions
+  const suggestion = msg.content.trim().slice(12);
+
+  if (suggestion.length === 0) {
+    msg.reply("Empty suggestion :(");
+    return;
+  }
+
   // Report suggestion to the developer
   client.users.fetch(DEVELOPER_ID).then((developer: User) => {
     developer.send(
-      `**New suggestion from <@${msg.author.id}>:** ${msg.content.slice(12)}`,
+      `**New suggestion from <@${msg.author.id}>:** ${suggestion}`,
     );
   });
 
