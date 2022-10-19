@@ -19,10 +19,15 @@ const client = new Client({
   intents: INTENTS,
 });
 
+client.setPresence({
+  name: "ibot help",
+  type: "LISTENING",
+});
+
 // Setup commands
 client.on("messageCreate", (msg: Message) => {
   if (msg.content.toLowerCase() == "ibot help") {
-    const file = Deno.readTextFileSync("embeds/help.json")
+    const file = Deno.readTextFileSync("embeds/help.json");
     const config: EmbedPayload = JSON.parse(file);
 
     const reply = new Embed(config).setTimestamp(Date.now());
