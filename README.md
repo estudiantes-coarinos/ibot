@@ -1,4 +1,4 @@
-# ibot
+# IBOT
 IB help discord bot made with Deno ( incomplete )
 
 # Run
