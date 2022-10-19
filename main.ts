@@ -43,7 +43,7 @@ client.on("messageCreate", (msg: Message) => {
   if (!msg.content.startsWith("ibot suggest")) return;
 
   if (DEVELOPER_ID === undefined) {
-    msg.reply("There's no a developer for this bot instance");
+    msg.reply("There's not a developer for this bot instance");
     return;
   }
 
