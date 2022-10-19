@@ -1,5 +1,6 @@
 import {
   Client,
+  Embed,
   GatewayIntents,
   Message,
 } from "https://deno.land/x/harmony@v2.6.0/mod.ts";
@@ -19,12 +20,13 @@ const client = new Client({
 
 // Setup commands
 client.on("messageCreate", (msg: Message) => {
-  if (msg.author.bot) {
-    return;
-  }
+  if (msg.content.toLowerCase() == "ibot help") {
+    const config = Deno.readTextFileSync("embeds/help.json")
+    const embed: Embed = JSON.parse(config);
 
-  if (msg.content == "ping") {
-    msg.author.send(`Pong! ${client.gateway.ping}ms`);
+    const reply = new Embed(embed).setTimestamp(Date.now());
+
+    msg.reply(reply);
   }
 });
 
