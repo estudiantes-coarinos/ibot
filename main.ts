@@ -23,8 +23,9 @@ client.on("messageCreate", (msg: Message) => {
     return;
   }
 
-  msg.channel.send(`Ping: ${client.gateway.ping}`);
-  msg.channel.send(msg.content || "empty");
+  if (msg.content == "ping") {
+    msg.author.send(`Pong! ${client.gateway.ping}ms`);
+  }
 });
 
 // Connect client
