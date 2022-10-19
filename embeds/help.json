@@ -1,6 +1,5 @@
 {
-  "title": "IB bot help",
-  "url": "https://github.com/AngelJohank/ibot",
+  "title": "Ayuda del bot",
   "author": {
     "name": "coarinos",
     "icon_url": "https://bit.ly/3Sgr5gC",
@@ -9,8 +8,8 @@
   "thumbnail": {
     "url": "https://bit.ly/3VGd9PH"
   },
-  "description": "Hola!, soy un bot open source que te ayudará durante tu estadía en el COAR. No estoy ni en alpha porque mi creador es un vago XD.\nEspero en un futuro ser útil.\nGithub: https://github.com/AngelJohank/ibot",
+  "description": "Hola!, soy un bot open source que te ayudará durante tu estadía en el COAR. No estoy ni en alpha porque mi creador es algo vago.\nAun así, espero en un futuro ser útil.\n\nPuedes contribuir a mi desarrollo creando una pull request en mi Repositorio oficial: https://github.com/AngelJohank/ibot\n\nLa página que contendrá mis commandos aún no está disponible, pero puedes enviarme sugerencias escribiendo: ibot suggest (sugerencia)",
   "footer": {
-    "text": "creado con ❤️"
+    "text": "❤️"
   }
 }
