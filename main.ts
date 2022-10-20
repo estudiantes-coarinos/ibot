@@ -14,7 +14,7 @@ import "https://deno.land/x/dotenv@v3.2.0/load.ts";
 class Client extends CommandClient {
   constructor() {
     super({
-      prefix: Deno.env.get("PREFIX") || "ibot",
+      prefix: Deno.env.get("PREFIX") || "ibot ",
       intents: [
         GatewayIntents.DIRECT_MESSAGES,
         GatewayIntents.GUILDS,
@@ -43,14 +43,13 @@ class Client extends CommandClient {
 }
 
 // Setup commands
-const client = new Client()
+const client = new Client();
 const commands = Deno.readDirSync("./commands");
 
 for (const command of commands) {
   if (command.isFile && command.name.endsWith(".ts")) {
     const commandDir = `./commands/${command.name}`;
-    const module = await import(commandDir);
-    client.commands.add(module.default);
+    client.commands.add(await import(commandDir));
   }
 }
 
