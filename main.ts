@@ -1,70 +1,57 @@
 import {
-  Client,
+  Command,
+  CommandClient,
+  CommandContext,
   Embed,
   EmbedPayload,
   GatewayIntents,
-  Message,
-  User,
 } from "https://deno.land/x/harmony@v2.6.0/mod.ts";
 
 // Read .env config
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
 
-const DEVELOPER_ID = Deno.env.get("DEVELOPER_ID") || undefined;
-const INTENTS = [
-  GatewayIntents.DIRECT_MESSAGES,
-  GatewayIntents.GUILDS,
-  GatewayIntents.GUILD_MESSAGES,
-];
-
-const client = new Client({
-  intents: INTENTS,
+const client = new CommandClient({
+  prefix: Deno.env.get("PREFIX") || "ibot",
+  intents: [
+    GatewayIntents.DIRECT_MESSAGES,
+    GatewayIntents.GUILDS,
+    GatewayIntents.GUILD_MESSAGES,
+  ],
 });
 
 client.setPresence({
-  name: "ibot help",
+  name: `${client.prefix}help`,
   type: "LISTENING",
 });
 
+client.on("ready", () => {
+  console.log(`${client.user?.tag} running with prefix "${client.prefix}"`);
+});
+
+// Setup commands
+const commands = Deno.readDirSync("./commands");
+
+for (const command of commands) {
+  if (!command.isFile && !command.name.endsWith(".ts")) break;
+
+  const commandDir = `./commands/${command.name}`;
+  const module = await import(commandDir);
+  client.commands.add(module.default);
+}
+
 // Help command
-client.on("messageCreate", (msg: Message) => {
-  if (msg.content.toLowerCase() !== "ibot help") return;
+class HelpCommand extends Command {
+  name = "help";
 
-  const file = Deno.readTextFileSync("embeds/help.json");
-  const config: EmbedPayload = JSON.parse(file);
+  execute(ctx: CommandContext) {
+    const file = Deno.readTextFileSync("embeds/help.json");
+    const config: EmbedPayload = JSON.parse(file);
 
-  const reply = new Embed(config).setTimestamp(Date.now());
-  msg.reply(reply);
-});
-
-// Suggest command
-client.on("messageCreate", (msg: Message) => {
-  if (msg.author.bot) return;
-  if (!msg.content.startsWith("ibot suggest")) return;
-
-  if (DEVELOPER_ID === undefined) {
-    msg.reply("There's not a developer for this bot instance");
-    return;
+    const reply = new Embed(config).setTimestamp(Date.now());
+    ctx.message.reply(reply);
   }
+}
 
-  // Handle empty suggestions
-  const suggestion = msg.content.trim().slice(12);
+client.commands.add(HelpCommand);
 
-  if (suggestion.length === 0) {
-    msg.reply("Empty suggestion :(");
-    return;
-  }
-
-  // Report suggestion to the developer
-  client.users.fetch(DEVELOPER_ID).then((developer: User) => {
-    developer.send(
-      `**New suggestion from <@${msg.author.id}>:** ${suggestion}`,
-    );
-  });
-
-  msg.reply("Suggestion submited");
-});
-
-// Connect client
-client.on("ready", () => console.log(`${client.user?.tag} running!!!`));
 client.connect();
