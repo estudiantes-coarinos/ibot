@@ -48,6 +48,7 @@ const commands = Deno.readDirSync("./commands");
 
 for (const command of commands) {
   if (command.isFile && command.name.endsWith(".ts")) {
+    // import all commands
     const commandDir = `./commands/${command.name}`;
     client.commands.add(await import(commandDir));
   }
