@@ -1,7 +1,7 @@
 import { Embed, EmbedPayload } from "https://deno.land/x/harmony@v2.6.0/mod.ts";
 
 /**
- * Read a json file from embeds dir and return an Embed with
+ * Reads a json file from embeds dir and return an Embed with
  * the currect timestamp
  */
 export function readEmbedFile(filename: string): Embed {
