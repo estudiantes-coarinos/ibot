@@ -2,11 +2,11 @@ import {
   command,
   CommandClient,
   CommandContext,
-  Embed,
-  EmbedPayload,
   event,
   GatewayIntents,
 } from "https://deno.land/x/harmony@v2.6.0/mod.ts";
+
+import { readEmbedFile } from "./utils/embed.ts";
 
 // Read .env config
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
@@ -35,10 +35,7 @@ class Client extends CommandClient {
 
   @command({ aliases: "help" })
   Help(ctx: CommandContext) {
-    const file = Deno.readTextFileSync("embeds/help.json");
-    const config: EmbedPayload = JSON.parse(file);
-    const reply = new Embed(config).setTimestamp(Date.now());
-    ctx.message.reply(reply);
+    ctx.message.reply(readEmbedFile("help"));
   }
 }
 
