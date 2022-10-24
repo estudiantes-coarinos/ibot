@@ -20,7 +20,9 @@ export default class extends Command {
 async function sendSuggestion(ctx: CommandContext, DEVELOPER_ID: string) {
   const developer = await ctx.client.users.fetch(DEVELOPER_ID);
   const suggestion = getSuggestion(ctx.message);
-  developer.send(suggestion);
+  await developer.send(suggestion);
+
+  ctx.message.reply("Suggestion sent");
 }
 
 function getSuggestion(message: Message) {
