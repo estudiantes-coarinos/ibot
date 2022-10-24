@@ -7,9 +7,7 @@ import { Embed } from "https://deno.land/x/harmony@v2.6.0/mod.ts";
 export function getEmbed(embedName: string): Embed {
   const embedPath = getEmbedPath(embedName);
   const embedText = Deno.readTextFileSync(embedPath);
-
-  const date = Date.now();
-  return new Embed(JSON.parse(embedText)).setTimestamp(date);
+  return new Embed(JSON.parse(embedText)).setTimestamp(Date.now());
 }
 
 function getEmbedPath(embedName: string) {
