@@ -6,7 +6,7 @@ import {
   GatewayIntents,
 } from "https://deno.land/x/harmony@v2.6.0/mod.ts";
 
-import { readEmbedFile } from "./utils/embed.ts";
+import { getEmbed } from "./utils/embed.ts";
 
 // Read .env config
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
@@ -36,7 +36,7 @@ class Bot extends CommandClient {
 
   @command({ aliases: "help" })
   Help(ctx: CommandContext) {
-    ctx.message.reply(readEmbedFile("help"));
+    ctx.message.reply(getEmbed("help"));
   }
 }
 
